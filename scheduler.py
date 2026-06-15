@@ -6,6 +6,12 @@ from engine.premarket import PreMarketAnalyzer
 from engine.live_engine import LiveEngine
 from engine.risk_manager import RiskManager
 from datetime import datetime
+import os
+import httpx
+import logging
+from apscheduler.triggers.interval import IntervalTrigger
+
+logger = logging.getLogger(__name__)
 
 IST = pytz.timezone('Asia/Kolkata')
 
@@ -34,5 +40,18 @@ def create_scheduler() -> BackgroundScheduler:
         risk.reset_daily_tracker(datetime.now(IST).date())
         
     scheduler.add_job(reset_risk, CronTrigger(hour=9, minute=0, day_of_week='mon-fri', timezone=IST), id='risk_reset')
+    
+    # Keep-Alive Ping for Render Free Tier (runs every 5 minutes)
+    def keep_alive_ping():
+        url = os.environ.get("RENDER_EXTERNAL_URL")
+        if url:
+            try:
+                # Ping the root dashboard to keep the web service awake
+                httpx.get(url, timeout=10.0)
+                logger.debug(f"Keep-alive ping sent to {url}")
+            except Exception as e:
+                logger.error(f"Keep-alive ping failed: {e}")
+                
+    scheduler.add_job(keep_alive_ping, IntervalTrigger(minutes=5), id='keep_alive')
     
     return scheduler
