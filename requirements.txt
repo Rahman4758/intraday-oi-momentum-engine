@@ -19,6 +19,7 @@ apscheduler>=3.10
 # Data analysis and numerical computation
 pandas>=2.1
 numpy>=1.26
+pytz>=2023.3
 
 # Environment variable management
 python-dotenv>=1.0
