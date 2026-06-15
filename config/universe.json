@@ -1,0 +1,1268 @@
+{
+    "DALBHARAT": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "UPL": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "BEL": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "M&M": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "PAYTM": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "SUZLON": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "TCS": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "KPITTECH": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "MANKIND": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "BAJAJ-AUTO": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "AXISBANK": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "NHPC": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "MARUTI": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "TVSMOTOR": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "JSWSTEEL": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "PNBHOUSING": {
+        "sector": "Broad Market",
+        "index": "OTHER F&O",
+        "upstox_index_key": "NSE_INDEX|NIFTY 500",
+        "liquidity_tier": 4
+    },
+    "360ONE": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "HDFCAMC": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "CDSL": {
+        "sector": "Broad Market",
+        "index": "OTHER F&O",
+        "upstox_index_key": "NSE_INDEX|NIFTY 500",
+        "liquidity_tier": 4
+    },
+    "DIVISLAB": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "CGPOWER": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "WAAREEENER": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "APLAPOLLO": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "COCHINSHIP": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "HDFCBANK": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "HINDUNILVR": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "HYUNDAI": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "FEDERALBNK": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "UNITDSPR": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "INDUSTOWER": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "NMDC": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "KAYNES": {
+        "sector": "Broad Market",
+        "index": "OTHER F&O",
+        "upstox_index_key": "NSE_INDEX|NIFTY 500",
+        "liquidity_tier": 4
+    },
+    "ICICIBANK": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "ANGELONE": {
+        "sector": "Broad Market",
+        "index": "OTHER F&O",
+        "upstox_index_key": "NSE_INDEX|NIFTY 500",
+        "liquidity_tier": 4
+    },
+    "GRASIM": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "IRFC": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "PNB": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "SBILIFE": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "PHOENIXLTD": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "BANDHANBNK": {
+        "sector": "Broad Market",
+        "index": "OTHER F&O",
+        "upstox_index_key": "NSE_INDEX|NIFTY 500",
+        "liquidity_tier": 4
+    },
+    "LTM": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "MOTHERSON": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "MFSL": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "RVNL": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "VBL": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "BPCL": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "ASIANPAINT": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "ADANIPORTS": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "RELIANCE": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "MAZDOCK": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "BRITANNIA": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "JINDALSTEL": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "INFY": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "NBCC": {
+        "sector": "Broad Market",
+        "index": "OTHER F&O",
+        "upstox_index_key": "NSE_INDEX|NIFTY 500",
+        "liquidity_tier": 4
+    },
+    "SRF": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "SWIGGY": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "PATANJALI": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "COFORGE": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "INDHOTEL": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "TRENT": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "GVT&D": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "ICICIPRULI": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "BAJFINANCE": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "UNIONBANK": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "DIXON": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "GODREJCP": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "PETRONET": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "ASTRAL": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "LUPIN": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "BHARATFORG": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "SHREECEM": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "RBLBANK": {
+        "sector": "Broad Market",
+        "index": "OTHER F&O",
+        "upstox_index_key": "NSE_INDEX|NIFTY 500",
+        "liquidity_tier": 4
+    },
+    "APOLLOHOSP": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "ABB": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "INOXWIND": {
+        "sector": "Broad Market",
+        "index": "OTHER F&O",
+        "upstox_index_key": "NSE_INDEX|NIFTY 500",
+        "liquidity_tier": 4
+    },
+    "RADICO": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "MAXHEALTH": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "BAJAJHLDNG": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "YESBANK": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "OIL": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "AUROPHARMA": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "TECHM": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "HAL": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "PIDILITIND": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "ADANIPOWER": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "SBICARD": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "BANKINDIA": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "OBEROIRLTY": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "VOLTAS": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "VMM": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "EICHERMOT": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "FORCEMOT": {
+        "sector": "Broad Market",
+        "index": "OTHER F&O",
+        "upstox_index_key": "NSE_INDEX|NIFTY 500",
+        "liquidity_tier": 4
+    },
+    "RECLTD": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "SAIL": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "DLF": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "IDFCFIRSTB": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "TATASTEEL": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "MOTILALOFS": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "PGEL": {
+        "sector": "Broad Market",
+        "index": "OTHER F&O",
+        "upstox_index_key": "NSE_INDEX|NIFTY 500",
+        "liquidity_tier": 4
+    },
+    "BANKBARODA": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "HINDZINC": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "KALYANKJIL": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "PREMIERENE": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "CHOLAFIN": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "GODREJPROP": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "LAURUSLABS": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "MANAPPURAM": {
+        "sector": "Broad Market",
+        "index": "OTHER F&O",
+        "upstox_index_key": "NSE_INDEX|NIFTY 500",
+        "liquidity_tier": 4
+    },
+    "PAGEIND": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "GLENMARK": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "DRREDDY": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "ONGC": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "NESTLEIND": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "TATACONSUM": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "FORTIS": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "VEDL": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "BHARTIARTL": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "HDFCLIFE": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "CUMMINSIND": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "LT": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "AUBANK": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "DABUR": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "ABCAPITAL": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "BAJAJFINSV": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "BOSCHLTD": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "JIOFIN": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "IEX": {
+        "sector": "Broad Market",
+        "index": "OTHER F&O",
+        "upstox_index_key": "NSE_INDEX|NIFTY 500",
+        "liquidity_tier": 4
+    },
+    "COLPAL": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "MPHASIS": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "ULTRACEMCO": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "NAM-INDIA": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "HCLTECH": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "INDIGO": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "PIIND": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "LICHSGFIN": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "MARICO": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "SONACOMS": {
+        "sector": "Broad Market",
+        "index": "OTHER F&O",
+        "upstox_index_key": "NSE_INDEX|NIFTY 500",
+        "liquidity_tier": 4
+    },
+    "BHEL": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "TITAN": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "WIPRO": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "TATAELXSI": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "UNOMINDA": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "SUPREMEIND": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "HEROMOTOCO": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "HINDPETRO": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "NYKAA": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "GAIL": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "OFSS": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "SOLARINDS": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "KFINTECH": {
+        "sector": "Broad Market",
+        "index": "OTHER F&O",
+        "upstox_index_key": "NSE_INDEX|NIFTY 500",
+        "liquidity_tier": 4
+    },
+    "IREDA": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "KEI": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "CIPLA": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "DMART": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "POWERGRID": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "LICI": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "ICICIGI": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "MCX": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "TATAPOWER": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "NUVAMA": {
+        "sector": "Broad Market",
+        "index": "OTHER F&O",
+        "upstox_index_key": "NSE_INDEX|NIFTY 500",
+        "liquidity_tier": 4
+    },
+    "GODFRYPHLP": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "ASHOKLEY": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "DELHIVERY": {
+        "sector": "Broad Market",
+        "index": "OTHER F&O",
+        "upstox_index_key": "NSE_INDEX|NIFTY 500",
+        "liquidity_tier": 4
+    },
+    "EXIDEIND": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "LODHA": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "NTPC": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "CAMS": {
+        "sector": "Broad Market",
+        "index": "OTHER F&O",
+        "upstox_index_key": "NSE_INDEX|NIFTY 500",
+        "liquidity_tier": 4
+    },
+    "LTF": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "POLICYBZR": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "HINDALCO": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "NATIONALUM": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "PERSISTENT": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "INDUSINDBK": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "POLYCAB": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "INDIANB": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "JSWENERGY": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "ADANIENSOL": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "KOTAKBANK": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "MUTHOOTFIN": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "AMBUJACEM": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "CONCOR": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "POWERINDIA": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "SAMMAANCAP": {
+        "sector": "Broad Market",
+        "index": "OTHER F&O",
+        "upstox_index_key": "NSE_INDEX|NIFTY 500",
+        "liquidity_tier": 4
+    },
+    "ITC": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "JUBLFOOD": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "BIOCON": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "PFC": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "ALKEM": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "SIEMENS": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "IOC": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "NAUKRI": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "BDL": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "SHRIRAMFIN": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "BSE": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "SBIN": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "ADANIENT": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "AMBER": {
+        "sector": "Broad Market",
+        "index": "OTHER F&O",
+        "upstox_index_key": "NSE_INDEX|NIFTY 500",
+        "liquidity_tier": 4
+    },
+    "TMPV": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "COALINDIA": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "PRESTIGE": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "ZYDUSLIFE": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "BLUESTARCO": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "ETERNAL": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "SUNPHARMA": {
+        "sector": "Broad Market",
+        "index": "NIFTY 50",
+        "upstox_index_key": "NSE_INDEX|Nifty 50",
+        "liquidity_tier": 1
+    },
+    "TORNTPHARM": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "CROMPTON": {
+        "sector": "Broad Market",
+        "index": "OTHER F&O",
+        "upstox_index_key": "NSE_INDEX|NIFTY 500",
+        "liquidity_tier": 4
+    },
+    "TIINDIA": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "CANBK": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "GMRAIRPORT": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "HAVELLS": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    },
+    "ADANIGREEN": {
+        "sector": "Broad Market",
+        "index": "NIFTY NEXT 50",
+        "upstox_index_key": "NSE_INDEX|NIFTY NEXT 50",
+        "liquidity_tier": 2
+    },
+    "IDEA": {
+        "sector": "Broad Market",
+        "index": "NIFTY MIDCAP 150",
+        "upstox_index_key": "NSE_INDEX|NIFTY MIDCAP 150",
+        "liquidity_tier": 3
+    }
+}

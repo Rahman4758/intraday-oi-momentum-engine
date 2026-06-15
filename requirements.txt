@@ -1,0 +1,39 @@
+# =============================================================================
+# Institutional Momentum Trading System - Python Dependencies
+# =============================================================================
+
+# Upstox broker SDK for market data and order management
+upstox-python-sdk>=2.9
+
+# Web framework for the live dashboard
+fastapi>=0.104
+uvicorn[standard]>=0.24
+jinja2>=3.1
+
+# MongoDB driver (sync) with SRV support
+pymongo[srv]>=4.6
+
+# Job scheduling for periodic score updates and OI refreshes
+apscheduler>=3.10
+
+# Data analysis and numerical computation
+pandas>=2.1
+numpy>=1.26
+
+# Environment variable management
+python-dotenv>=1.0
+
+# Pydantic settings management
+pydantic-settings>=2.1
+
+# HTTP client for REST API calls
+httpx>=0.25
+
+# WebSocket client for live market data streaming
+websockets>=12.0
+
+# Protocol Buffers for Upstox binary market feed
+protobuf>=4.25
+
+# Technical analysis indicators (ADX, ATR, EMA, etc.)
+ta>=0.11.0

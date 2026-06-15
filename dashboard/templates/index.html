@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Intraday Momentum System | Live Dashboard</title>
+    <meta name="description" content="Institutional Momentum Trading System - Live Scores & Alerts">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header class="glass-panel" style="margin: 1.5rem 2rem; border-radius: 16px;">
+        <h1>⚡ Momentum System</h1>
+        <div class="header-status">
+            <div class="system-status">
+                <span class="status-dot"></span> LIVE
+            </div>
+            <div class="time-window-badge" id="time-window">MARKET HOURS</div>
+        </div>
+    </header>
+    
+    <section class="market-overview glass-panel" id="market-overview" style="margin: 0 2rem;">
+        <div class="market-item">Nifty 50: <span id="nifty-val">--</span></div>
+        <div class="market-item">Bank Nifty: <span id="bank-nifty-val">--</span></div>
+        <div class="market-item">VIX: <span id="vix-val">--</span></div>
+        <div class="market-item">PCR: <span id="pcr-val">--</span></div>
+    </section>
+    
+    <section class="risk-panel glass-panel" id="risk-panel" style="margin: 1rem 2rem 0 2rem;">
+        <div class="risk-item">Trades: <span id="risk-trades">0/3</span></div>
+        <div class="risk-item">Daily P&L: <span id="risk-pnl">₹0.00</span></div>
+        <div class="risk-item">Status: <span id="risk-status" class="status-active">ACTIVE</span></div>
+    </section>
+    
+    <section class="dashboard-grid" id="score-cards">
+        <!-- Dynamically rendered score cards -->
+    </section>
+    
+    <section class="alerts-section" id="watchlist-section">
+        <h2>📋 Today's Watchlist (EOD Selected)</h2>
+        <div class="dashboard-grid" id="watchlist-container" style="padding: 1rem 0;">
+            <div style="color: var(--text-muted); font-size: 0.875rem; padding: 1rem;">No stocks in watchlist for today. Run EOD Scanner.</div>
+        </div>
+    </section>
+    
+    <section class="alerts-section" id="alerts">
+        <h2>🎯 Recent Alerts <a href="/alerts" class="view-all">View All</a></h2>
+        <div id="alerts-container"></div>
+    </section>
+    
+    <!-- Trade Logging Modal -->
+    <div class="modal-overlay" id="trade-modal">
+        <div class="modal">
+            <h3>Log Trade Result</h3>
+            <div class="form-group">
+                <label>Symbol</label>
+                <input type="text" id="trade-symbol" placeholder="e.g. FEDERALBNK">
+            </div>
+            <div class="form-group">
+                <label>P&L (₹)</label>
+                <input type="number" id="trade-pnl" placeholder="e.g. 1500 or -1000">
+            </div>
+            <div class="form-group">
+                <label>Result</label>
+                <select id="trade-result">
+                    <option value="win">Win</option>
+                    <option value="loss">Loss</option>
+                </select>
+            </div>
+            <div class="modal-actions">
+                <button onclick="closeTradeModal()" class="btn-secondary">Cancel</button>
+                <button onclick="submitTrade()" class="btn-primary">Save Trade</button>
+            </div>
+        </div>
+    </div>
+    
+    <section class="controls">
+        <button onclick="triggerEOD()" class="btn-action">Run EOD Scanner</button>
+        <button onclick="triggerPreMarket()" class="btn-action">Run Pre-Market</button>
+        <button onclick="openTradeModal()" class="btn-primary">Log Trade</button>
+    </section>
+    
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

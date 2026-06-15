@@ -1,0 +1,57 @@
+# =============================================================================
+# Institutional Momentum Trading System - Git Ignore
+# =============================================================================
+
+# --- Secrets & Environment ---
+.env
+*.env
+!.env.example
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyo
+*.pyd
+
+# --- Virtual Environments ---
+.venv/
+venv/
+ENV/
+env/
+
+# --- IDE ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Distribution / Packaging ---
+dist/
+build/
+*.egg-info/
+*.egg
+*.whl
+
+# --- Testing ---
+.pytest_cache/
+htmlcov/
+.coverage
+coverage.xml
+
+# --- Logs ---
+*.log
+logs/
+
+# --- Misc ---
+*.bak
+*.tmp
