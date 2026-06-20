@@ -94,6 +94,9 @@ class LiveEngine:
                     self._update_all_scores()
                 except Exception as e:
                     logger.error(f"Error in Live Engine scoring loop: {e}", exc_info=True)
+                finally:
+                    import gc
+                    gc.collect()
                 last_score_time = time.time()
                 
             time.sleep(5)

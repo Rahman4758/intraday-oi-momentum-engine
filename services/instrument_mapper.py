@@ -46,9 +46,9 @@ class InstrumentMapper:
         self._index_cache: Dict[str, str] = {}
         # FO lookup: composite key → instrument_key
         self._fo_cache: Dict[str, str] = {}
-        # Raw instrument lists for advanced queries
-        self._nse_instruments: List[Dict[str, Any]] = []
-        self._fo_instruments: List[Dict[str, Any]] = []
+        # We NO LONGER store raw instrument lists to save memory.
+        # self._nse_instruments: List[Dict[str, Any]] = []
+        # self._fo_instruments: List[Dict[str, Any]] = []
 
         self._last_loaded: Optional[datetime] = None
 
@@ -114,7 +114,6 @@ class InstrumentMapper:
 
         # ── NSE equities + indices ──────────────────────────────────────
         nse_data = self._download_gz_json(_INSTRUMENT_URL)
-        self._nse_instruments = nse_data
 
         self._equity_cache.clear()
         self._index_cache.clear()
@@ -142,10 +141,10 @@ class InstrumentMapper:
             len(self._equity_cache),
             len(self._index_cache),
         )
+        del nse_data  # Free memory immediately
 
         # ── NSE F&O ────────────────────────────────────────────────────
         fo_data = self._download_gz_json(_FO_INSTRUMENT_URL)
-        self._fo_instruments = fo_data
         self._fo_cache.clear()
 
         for inst in fo_data:
@@ -177,6 +176,7 @@ class InstrumentMapper:
                 self._fo_cache[composite] = inst_key
 
         logger.info("Loaded %d F&O instruments.", len(self._fo_cache))
+        del fo_data  # Free memory immediately
         self._last_loaded = datetime.utcnow()
 
     @staticmethod
