@@ -163,6 +163,24 @@ class OIScorer(BaseScorer):
         auto_skip = False
         skip_reasons: list[str] = []
 
+        # -----------------------------------------------------------
+        # Pillar 3: The Path Clearer (Strict OI Ratio >= 0.40)
+        # -----------------------------------------------------------
+        if current_price > 0 and strike_analyses:
+            sorted_by_strike = sorted(strike_analyses, key=lambda s: s["strike_price"])
+            # Find the 2 strikes immediately above current price
+            resistance_strikes = [s for s in sorted_by_strike if s["strike_price"] > current_price][:2]
+            
+            if len(resistance_strikes) >= 2:
+                total_res_put_oi = sum(s["put_oi"] for s in resistance_strikes)
+                total_res_call_oi = sum(s["call_oi"] for s in resistance_strikes)
+                
+                res_ratio = (total_res_put_oi / total_res_call_oi) if total_res_call_oi > 0 else 1.0
+                
+                if res_ratio < 0.40:
+                    auto_skip = True
+                    skip_reasons.append(f"Resistance Path Blocked (Put/Call OI Ratio {res_ratio:.2f} < 0.40 on next 2 strikes)")
+
         put_score: float = 0.0
         if any_put_writing:
             put_score = OI_PUT_MAX_SCORE
