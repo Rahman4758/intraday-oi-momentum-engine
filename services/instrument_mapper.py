@@ -18,8 +18,7 @@ import httpx
 
 logger = logging.getLogger(__name__)
 
-_INSTRUMENT_URL = "https://assets.upstox.com/market-quote/instruments/exchange/NSE.json.gz"
-_FO_INSTRUMENT_URL = "https://assets.upstox.com/market-quote/instruments/exchange/NSE_FO.json.gz"
+_CSV_URL = "https://assets.upstox.com/market-quote/instruments/exchange/complete.csv.gz"
 _CACHE_TTL_HOURS = 12  # re-download if older than this
 _MAX_RETRIES = 3
 _BACKOFF_BASE = 2.0
@@ -62,122 +61,108 @@ class InstrumentMapper:
             return True
         return datetime.utcnow() - self._last_loaded > timedelta(hours=_CACHE_TTL_HOURS)
 
-    @staticmethod
-    def _download_gz_json(url: str) -> List[Dict[str, Any]]:
-        """
-        Download a ``.json.gz`` file and return the parsed JSON list.
-
-        Retries up to ``_MAX_RETRIES`` times with exponential back-off.
-        """
-        for attempt in range(1, _MAX_RETRIES + 1):
-            try:
-                headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}
-                with httpx.Client(timeout=60.0, follow_redirects=True, headers=headers) as client:
-                    resp = client.get(url)
-                    resp.raise_for_status()
-
-                    # Decompress gzip content
-                    raw_bytes = resp.content
-                    try:
-                        decompressed = gzip.decompress(raw_bytes)
-                    except gzip.BadGzipFile:
-                        # Some CDN configurations serve uncompressed despite .gz extension
-                        decompressed = raw_bytes
-
-                    data = json.loads(decompressed)
-                    if isinstance(data, list):
-                        return data
-                    logger.warning("Instrument master is not a list — got %s", type(data))
-                    return []
-
-            except (httpx.HTTPStatusError, httpx.TimeoutException, httpx.ConnectError) as exc:
-                backoff = _BACKOFF_BASE * (2 ** (attempt - 1))
-                logger.warning(
-                    "Instrument download failed (%s): %s  [attempt %d/%d, retry in %.1fs]",
-                    url, exc, attempt, _MAX_RETRIES, backoff,
-                )
-                time.sleep(backoff)
-
-        logger.error("Could not download instrument master from %s", url)
-        return []
-
     def load_instruments(self) -> None:
         """
-        Download and cache the Upstox instrument master files.
+        Download and cache the Upstox instrument master file (CSV).
 
         Builds three lookup dictionaries:
         - ``_equity_cache``:  ``SYMBOL`` → ``NSE_EQ|ISIN``
         - ``_index_cache``:   ``INDEX NAME`` → ``NSE_INDEX|...``
         - ``_fo_cache``:      composite key → ``NSE_FO|...``
         """
-        logger.info("Loading instrument master files …")
+        import csv
+        
+        logger.info("Loading instrument master from CSV to save memory ...")
 
-        # ── NSE equities + indices ──────────────────────────────────────
-        nse_data = self._download_gz_json(_INSTRUMENT_URL)
+        for attempt in range(1, _MAX_RETRIES + 1):
+            try:
+                headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0"}
+                with httpx.Client(timeout=120.0, follow_redirects=True, headers=headers) as client:
+                    resp = client.get(_CSV_URL)
+                    resp.raise_for_status()
 
-        self._equity_cache.clear()
-        self._index_cache.clear()
+                    raw_bytes = resp.content
+                    try:
+                        decompressed = gzip.decompress(raw_bytes)
+                    except gzip.BadGzipFile:
+                        decompressed = raw_bytes
+                        
+                    # Aggressive GC
+                    del raw_bytes
+                    csv_text = decompressed.decode('utf-8')
+                    del decompressed
 
-        for inst in nse_data:
-            inst_key = inst.get("instrument_key", "")
-            symbol = inst.get("trading_symbol", "").upper().strip()
-            instrument_type = inst.get("instrument_type", "").upper()
-            exchange = inst.get("exchange", "").upper()
-            name = inst.get("name", "").upper().strip()
+                    reader = csv.DictReader(io.StringIO(csv_text))
+                    
+                    self._equity_cache.clear()
+                    self._index_cache.clear()
+                    self._fo_cache.clear()
 
-            if not inst_key or not symbol:
-                continue
+                    for row in reader:
+                        inst_key = row.get("instrument_key", "")
+                        symbol = row.get("tradingsymbol", "").upper().strip()
+                        name = row.get("name", "").upper().strip()
+                        inst_type = row.get("instrument_type", "").upper()
+                        
+                        if not inst_key or not symbol:
+                            continue
 
-            if inst_key.startswith("NSE_EQ|"):
-                self._equity_cache[symbol] = inst_key
-            elif inst_key.startswith("NSE_INDEX|"):
-                self._index_cache[symbol] = inst_key
-                # Also map by name for flexible lookups
-                if name:
-                    self._index_cache[name] = inst_key
+                        # NSE EQ
+                        if inst_key.startswith("NSE_EQ|"):
+                            self._equity_cache[symbol] = inst_key
+                            
+                        # NSE INDEX
+                        elif inst_key.startswith("NSE_INDEX|"):
+                            self._index_cache[symbol] = inst_key
+                            if name:
+                                self._index_cache[name] = inst_key
+                                
+                        # NSE FO
+                        elif inst_key.startswith("NSE_FO|"):
+                            expiry = row.get("expiry", "")
+                            strike_str = row.get("strike", "0")
+                            try:
+                                strike = float(strike_str) if strike_str else 0.0
+                            except ValueError:
+                                strike = 0.0
+                                
+                            option_type = row.get("option_type", "").upper()
 
-        logger.info(
-            "Loaded %d equity and %d index instruments.",
-            len(self._equity_cache),
-            len(self._index_cache),
-        )
-        del nse_data  # Free memory immediately
+                            if option_type in ("CE", "PE"):
+                                expiry_norm = self._normalise_date(expiry)
+                                composite = self._make_option_composite(
+                                    name or symbol,
+                                    expiry_norm,
+                                    strike,
+                                    option_type,
+                                )
+                                self._fo_cache[composite] = inst_key
+                            elif inst_type in ("FUTIDX", "FUTSTK"):
+                                expiry_norm = self._normalise_date(expiry)
+                                composite = f"FUT|{name or symbol}|{expiry_norm}"
+                                self._fo_cache[composite] = inst_key
 
-        # ── NSE F&O ────────────────────────────────────────────────────
-        fo_data = self._download_gz_json(_FO_INSTRUMENT_URL)
-        self._fo_cache.clear()
+                    logger.info(
+                        "Loaded %d equity, %d index, %d FO instruments.",
+                        len(self._equity_cache), len(self._index_cache), len(self._fo_cache)
+                    )
+                    
+                    del csv_text
+                    self._last_loaded = datetime.utcnow()
+                    return
 
-        for inst in fo_data:
-            inst_key = inst.get("instrument_key", "")
-            symbol = inst.get("trading_symbol", "").upper().strip()
-            expiry = inst.get("expiry", "")
-            strike = inst.get("strike_price", inst.get("strike", 0))
-            option_type = inst.get("option_type", "").upper()
-            instrument_type = inst.get("instrument_type", "").upper()
-
-            if not inst_key:
-                continue
-
-            # Build composite lookup key for options
-            if option_type in ("CE", "PE"):
-                # Normalise expiry to YYYY-MM-DD if possible
-                expiry_norm = self._normalise_date(expiry)
-                composite = self._make_option_composite(
-                    inst.get("name", symbol).upper().strip(),
-                    expiry_norm,
-                    float(strike),
-                    option_type,
+            except (httpx.HTTPStatusError, httpx.TimeoutException, httpx.ConnectError) as exc:
+                backoff = _BACKOFF_BASE * (2 ** (attempt - 1))
+                logger.warning(
+                    "CSV download failed (%s): %s  [attempt %d/%d, retry in %.1fs]",
+                    _CSV_URL, exc, attempt, _MAX_RETRIES, backoff,
                 )
-                self._fo_cache[composite] = inst_key
-            elif instrument_type in ("FUTIDX", "FUTSTK"):
-                # Future contracts
-                expiry_norm = self._normalise_date(expiry)
-                composite = f"FUT|{inst.get('name', symbol).upper().strip()}|{expiry_norm}"
-                self._fo_cache[composite] = inst_key
+                time.sleep(backoff)
+            except Exception as e:
+                logger.error(f"Unexpected error parsing CSV: {e}")
+                time.sleep(2)
 
-        logger.info("Loaded %d F&O instruments.", len(self._fo_cache))
-        del fo_data  # Free memory immediately
-        self._last_loaded = datetime.utcnow()
+        logger.error("Could not load instrument master CSV after %d retries", _MAX_RETRIES)
 
     @staticmethod
     def _normalise_date(raw: str) -> str:
