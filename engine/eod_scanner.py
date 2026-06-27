@@ -73,8 +73,8 @@ class EODScanner:
                 
                 # 1. Delivery % Check
                 delivery_pct = self._get_delivery_pct(bhav_df, symbol)
-                if delivery_pct < 40.0:
-                    logger.debug(f"[{symbol}] Skipped: Delivery {delivery_pct}% < 40%")
+                if delivery_pct < 50.0:
+                    logger.debug(f"[{symbol}] Skipped: Delivery {delivery_pct}% < 50%")
                     continue
                         
                 # 2. OHLCV Fetch for Price/EMA & RVOL
@@ -102,6 +102,11 @@ class EODScanner:
                     continue
                     
                 avg_volume_20d = candles['volume'].tail(20).mean()
+                current_volume = last_row['volume']
+                
+                if current_volume < avg_volume_20d:
+                    logger.debug(f"[{symbol}] Skipped: Volume {current_volume} < 20D Avg {avg_volume_20d:.0f}")
+                    continue
                 atr_14 = calculate_atr(candles, 14)
                 if pd.isna(atr_14):
                     atr_14 = close_price * 0.02 # fallback
