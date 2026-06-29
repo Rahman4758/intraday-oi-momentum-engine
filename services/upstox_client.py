@@ -382,9 +382,9 @@ class UpstoxService:
             quotes_data = data.get("data", {})
 
             for inst_key, quote_info in quotes_data.items():
-                ohlc = quote_info.get("ohlc", {})
-                ltp = float(quote_info.get("last_price", 0))
-                prev_close = float(ohlc.get("close", 0))
+                ohlc = quote_info.get("ohlc") or {}
+                ltp = float(quote_info.get("last_price") or 0.0)
+                prev_close = float(ohlc.get("close") or 0.0)
                 change_pct = (
                     ((ltp - prev_close) / prev_close * 100)
                     if prev_close != 0
@@ -392,12 +392,12 @@ class UpstoxService:
                 )
                 all_quotes[inst_key] = {
                     "ltp": ltp,
-                    "open": float(ohlc.get("open", 0)),
-                    "high": float(ohlc.get("high", 0)),
-                    "low": float(ohlc.get("low", 0)),
+                    "open": float(ohlc.get("open") or 0.0),
+                    "high": float(ohlc.get("high") or 0.0),
+                    "low": float(ohlc.get("low") or 0.0),
                     "close": prev_close,
-                    "volume": int(quote_info.get("volume", 0)),
-                    "oi": int(quote_info.get("oi", 0)),
+                    "volume": int(quote_info.get("volume") or 0),
+                    "oi": int(quote_info.get("oi") or 0),
                     "change_pct": round(change_pct, 2),
                 }
 

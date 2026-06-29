@@ -38,18 +38,26 @@ class InstrumentMapper:
         # => "NSE_EQ|INE002A01018"
     """
 
-    def __init__(self) -> None:
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super(InstrumentMapper, cls).__new__(cls, *args, **kwargs)
+            cls._instance._init_state()
+        return cls._instance
+
+    def _init_state(self) -> None:
+        if getattr(self, "_initialized", False):
+            return
         # Equity lookup:  symbol (uppercase) → instrument_key
         self._equity_cache: Dict[str, str] = {}
         # Index lookup: index name (uppercase) → instrument_key
         self._index_cache: Dict[str, str] = {}
         # FO lookup: composite key → instrument_key
         self._fo_cache: Dict[str, str] = {}
-        # We NO LONGER store raw instrument lists to save memory.
-        # self._nse_instruments: List[Dict[str, Any]] = []
-        # self._fo_instruments: List[Dict[str, Any]] = []
 
         self._last_loaded: Optional[datetime] = None
+        self._initialized = True
 
     # ────────────────────────────────────────────────────────────────────
     # Loading & caching
