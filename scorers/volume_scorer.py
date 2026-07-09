@@ -31,7 +31,7 @@ class VolumeScorer(BaseScorer):
     - RVOL < 1.5  → 0 pts + AUTO-SKIP (no institutional participation)
     """
 
-    def calculate(self, symbol: str, data: dict) -> ScoreResult:
+    def calculate(self, symbol: str, data: dict, bias: str = "LONG") -> ScoreResult:
         """Calculate Volume score for a symbol.
 
         Args:

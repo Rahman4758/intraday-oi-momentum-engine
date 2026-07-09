@@ -30,7 +30,7 @@ class MarketScorer(BaseScorer):
     - Index PCR trend: rising (today > yesterday) → 4 pts
     """
 
-    def calculate(self, symbol: str, data: dict) -> ScoreResult:
+    def calculate(self, symbol: str, data: dict, bias: str = "LONG") -> ScoreResult:
         """Calculate Market score.
 
         Note: This scorer evaluates market conditions, not a specific
@@ -59,8 +59,13 @@ class MarketScorer(BaseScorer):
         # Nifty Direction (3 pts)
         # -----------------------------------------------------------
         nifty_green = nifty_change > 0
-        nifty_score = MARKET_NIFTY_GREEN_SCORE if nifty_green else 0.0
         nifty_direction = "green" if nifty_green else "red"
+        
+        nifty_score = 0.0
+        if bias == "LONG" and nifty_green:
+            nifty_score = MARKET_NIFTY_GREEN_SCORE
+        elif bias == "SHORT" and not nifty_green:
+            nifty_score = MARKET_NIFTY_GREEN_SCORE
 
         # -----------------------------------------------------------
         # VIX Level (3 pts)
@@ -87,7 +92,12 @@ class MarketScorer(BaseScorer):
         # Index PCR Trend (4 pts)
         # -----------------------------------------------------------
         pcr_rising = nifty_pcr_today > nifty_pcr_yesterday
-        pcr_score = MARKET_PCR_RISING_SCORE if pcr_rising else 0.0
+        pcr_score = 0.0
+        
+        if bias == "LONG" and pcr_rising:
+            pcr_score = MARKET_PCR_RISING_SCORE
+        elif bias == "SHORT" and not pcr_rising:
+            pcr_score = MARKET_PCR_RISING_SCORE
 
         # -----------------------------------------------------------
         # Total Score

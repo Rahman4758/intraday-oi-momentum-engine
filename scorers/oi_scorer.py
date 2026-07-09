@@ -32,7 +32,7 @@ class OIScorer(BaseScorer):
     - Multi-strike confirmation across top Put OI strikes
     """
 
-    def calculate(self, symbol: str, data: dict) -> ScoreResult:
+    def calculate(self, symbol: str, data: dict, bias: str = "LONG") -> ScoreResult:
         """Calculate OI score for a symbol.
 
         Args:
@@ -54,7 +54,7 @@ class OIScorer(BaseScorer):
 
         # Build baseline lookup by strike price
         baseline_map: dict = {
-            s["strike_price"]: s for s in baseline_chain
+            s.get("strike_price", s.get("strike")): s for s in baseline_chain
         }
 
         # -----------------------------------------------------------
@@ -164,56 +164,98 @@ class OIScorer(BaseScorer):
         skip_reasons: list[str] = []
 
         # -----------------------------------------------------------
-        # Pillar 3: The Path Clearer (Strict OI Ratio >= 0.40)
+        # Pillar 3: The Path Clearer (Strict OI Ratio >= 0.40) / Path Blocker
         # -----------------------------------------------------------
         if current_price > 0 and strike_analyses:
             sorted_by_strike = sorted(strike_analyses, key=lambda s: s["strike_price"])
-            # Find the 2 strikes immediately above current price
-            resistance_strikes = [s for s in sorted_by_strike if s["strike_price"] > current_price][:2]
             
-            if len(resistance_strikes) >= 2:
-                total_res_put_oi = sum(s["put_oi"] for s in resistance_strikes)
-                total_res_call_oi = sum(s["call_oi"] for s in resistance_strikes)
-                
-                res_ratio = (total_res_put_oi / total_res_call_oi) if total_res_call_oi > 0 else 1.0
-                
-                if res_ratio < 0.40:
-                    auto_skip = True
-                    skip_reasons.append(f"Resistance Path Blocked (Put/Call OI Ratio {res_ratio:.2f} < 0.40 on next 2 strikes)")
+            if bias == "LONG":
+                # For LONG: want clear path above (Put/Call OI >= 0.40 on resistance)
+                resistance_strikes = [s for s in sorted_by_strike if s["strike_price"] > current_price][:2]
+                if len(resistance_strikes) >= 2:
+                    total_res_put_oi = sum(s["put_oi"] for s in resistance_strikes)
+                    total_res_call_oi = sum(s["call_oi"] for s in resistance_strikes)
+                    res_ratio = (total_res_put_oi / total_res_call_oi) if total_res_call_oi > 0 else 1.0
+                    
+                    if res_ratio < 0.40:
+                        auto_skip = True
+                        skip_reasons.append(f"Resistance Path Blocked (Put/Call OI Ratio {res_ratio:.2f} < 0.40 on next 2 strikes)")
+            
+            elif bias == "SHORT":
+                # For SHORT: want clear path below (Call/Put OI >= 0.40 on support)
+                # Find the 2 strikes immediately below current price
+                support_strikes = [s for s in sorted_by_strike if s["strike_price"] < current_price][-2:]
+                if len(support_strikes) >= 2:
+                    total_sup_put_oi = sum(s["put_oi"] for s in support_strikes)
+                    total_sup_call_oi = sum(s["call_oi"] for s in support_strikes)
+                    sup_ratio = (total_sup_call_oi / total_sup_put_oi) if total_sup_put_oi > 0 else 1.0
+                    
+                    if sup_ratio < 0.40:
+                        auto_skip = True
+                        skip_reasons.append(f"Support Path Blocked (Call/Put OI Ratio {sup_ratio:.2f} < 0.40 on next 2 strikes)")
 
         put_score: float = 0.0
-        if any_put_writing:
-            put_score = OI_PUT_MAX_SCORE
-        if any_put_buying and not any_put_writing:
-            auto_skip = True
-            skip_reasons.append("Put Buying detected (bearish)")
-
-        # Apply multi-strike scaling to put score
-        if multi_strike_confirmation == "weak":
-            put_score = put_score * 0.5
-        elif multi_strike_confirmation == "none":
-            put_score = 0.0
-
-        # -----------------------------------------------------------
-        # Score: Call OI Analysis (8 pts)
-        # -----------------------------------------------------------
         call_score: float = 0.0
-        if any_call_writing:
-            call_score = OI_CALL_MAX_SCORE
-        if any_call_buying and not any_call_writing:
-            auto_skip = True
-            skip_reasons.append("Call Buying detected (bearish)")
+        
+        if bias == "LONG":
+            # For LONG, we want Put Writing (Support building)
+            if any_put_writing:
+                put_score = OI_PUT_MAX_SCORE
+            if any_put_buying and not any_put_writing:
+                auto_skip = True
+                skip_reasons.append("Put Buying detected (Retailers trapping)")
+                
+            # For LONG, we want Call Unwinding (Resistance breaking)
+            if any_call_buying:
+                call_score = OI_CALL_MAX_SCORE # Interpreting as unwinding/short covering
+            if any_call_writing:
+                auto_skip = True
+                skip_reasons.append("Call Writing detected (Resistance building)")
+                
+        elif bias == "SHORT":
+            # For SHORT, we want Call Writing (Resistance building)
+            if any_call_writing:
+                call_score = OI_CALL_MAX_SCORE
+            if any_call_buying and not any_call_writing:
+                auto_skip = True
+                skip_reasons.append("Call Buying detected (Retailers trapping)")
+                
+            # For SHORT, we want Put Unwinding (Support breaking)
+            if any_put_buying:
+                put_score = OI_PUT_MAX_SCORE # Interpreting as unwinding/long unwinding
+            if any_put_writing:
+                auto_skip = True
+                skip_reasons.append("Put Writing detected (Support building)")
+
+        # Apply multi-strike scaling
+        # In SHORT, multi-strike confirmation of Call Writing is key.
+        # But we'll just apply it to whichever is the main score.
+        if bias == "LONG":
+            if multi_strike_confirmation == "weak":
+                put_score = put_score * 0.5
+            elif multi_strike_confirmation == "none":
+                put_score = 0.0
+        elif bias == "SHORT":
+            # For short, we'd ideally check multi-strike call writing, but keeping it simple:
+            if multi_strike_confirmation == "none":
+                call_score = call_score * 0.5
 
         # -----------------------------------------------------------
         # Score: PCR Shift (5 pts)
         # -----------------------------------------------------------
         pcr_score: float = 0.0
         pcr_rising = False
-        if current_pcr > baseline_pcr:
-            pcr_score = OI_PCR_MAX_SCORE
-            pcr_rising = True
-        elif current_pcr < baseline_pcr:
-            pcr_score = OI_PCR_PENALTY  # negative penalty
+        if bias == "LONG":
+            if current_pcr > baseline_pcr:
+                pcr_score = OI_PCR_MAX_SCORE
+                pcr_rising = True
+            elif current_pcr < baseline_pcr:
+                pcr_score = OI_PCR_PENALTY  # negative penalty
+        elif bias == "SHORT":
+            if current_pcr < baseline_pcr:
+                pcr_score = OI_PCR_MAX_SCORE
+            elif current_pcr > baseline_pcr:
+                pcr_score = OI_PCR_PENALTY  # negative penalty
 
         # -----------------------------------------------------------
         # Compute aggregate OI change %s for details

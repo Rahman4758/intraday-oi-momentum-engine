@@ -33,7 +33,7 @@ class PriceScorer(BaseScorer):
     - Candle confirmation: volume spike above 1.5× average (2 pts)
     """
 
-    def calculate(self, symbol: str, data: dict) -> ScoreResult:
+    def calculate(self, symbol: str, data: dict, bias: str = "LONG") -> ScoreResult:
         """Calculate Price score for a symbol.
 
         Args:
@@ -59,7 +59,10 @@ class PriceScorer(BaseScorer):
         # -----------------------------------------------------------
         # VWAP Score (10 pts)
         # -----------------------------------------------------------
-        vwap_holding = current_price > vwap if vwap > 0 else False
+        if bias == "LONG":
+            vwap_holding = current_price > vwap if vwap > 0 else False
+        elif bias == "SHORT":
+            vwap_holding = current_price < vwap if vwap > 0 else False
         vwap_score = PRICE_VWAP_SCORE if vwap_holding else 0.0
 
         # -----------------------------------------------------------
@@ -89,11 +92,14 @@ class PriceScorer(BaseScorer):
 
         if avg_candle_volume > 0:
             volume_ratio = candle_volume / avg_candle_volume
-            # Both conditions: volume > 1.5x AND close above VWAP
-            if (volume_ratio > PRICE_CANDLE_VOLUME_MULTIPLIER
-                    and candle_close > vwap):
-                candle_confirmed = True
-                candle_score = PRICE_CANDLE_SCORE
+            # Both conditions: volume > 1.5x AND close confirms bias
+            if volume_ratio > PRICE_CANDLE_VOLUME_MULTIPLIER:
+                if bias == "LONG" and candle_close > vwap:
+                    candle_confirmed = True
+                    candle_score = PRICE_CANDLE_SCORE
+                elif bias == "SHORT" and candle_close < vwap:
+                    candle_confirmed = True
+                    candle_score = PRICE_CANDLE_SCORE
 
         # -----------------------------------------------------------
         # Total Score

@@ -26,7 +26,7 @@ class RSScorer(BaseScorer):
     - Laggard: Stock < Sector OR < Nifty → 0 pts
     """
 
-    def calculate(self, symbol: str, data: dict) -> ScoreResult:
+    def calculate(self, symbol: str, data: dict, bias: str = "LONG") -> ScoreResult:
         """Calculate Relative Strength score for a symbol.
 
         Args:
@@ -45,18 +45,31 @@ class RSScorer(BaseScorer):
         score: float = 0.0
         strength_category: str = "laggard"
 
-        if stock_change > sector_change and sector_change > nifty_change:
-            # Stock is leading both sector and market
-            score = RS_LEADER_SCORE
-            strength_category = "leader"
-        elif stock_change > nifty_change and stock_change <= sector_change:
-            # Stock beats Nifty but not its sector
-            score = RS_PARTIAL_SCORE
-            strength_category = "partial"
-        else:
-            # Stock underperforming either sector or Nifty
-            score = 0.0
-            strength_category = "laggard"
+        if bias == "LONG":
+            if stock_change > sector_change and sector_change > nifty_change:
+                # Stock is leading both sector and market
+                score = RS_LEADER_SCORE
+                strength_category = "leader"
+            elif stock_change > nifty_change and stock_change <= sector_change:
+                # Stock beats Nifty but not its sector
+                score = RS_PARTIAL_SCORE
+                strength_category = "partial"
+            else:
+                # Stock underperforming either sector or Nifty
+                score = 0.0
+                strength_category = "laggard"
+        elif bias == "SHORT":
+            if stock_change < sector_change and sector_change < nifty_change:
+                # Stock is weaker than both sector and market
+                score = RS_LEADER_SCORE
+                strength_category = "weakest"
+            elif stock_change < nifty_change and stock_change >= sector_change:
+                # Stock is weaker than Nifty but not sector
+                score = RS_PARTIAL_SCORE
+                strength_category = "partial_weak"
+            else:
+                score = 0.0
+                strength_category = "strong"
 
         score = max(0.0, min(score, RS_MAX_SCORE))
 

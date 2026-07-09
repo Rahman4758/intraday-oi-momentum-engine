@@ -110,6 +110,8 @@ class LiveEngine:
             return
             
         symbols = [s['symbol'] for s in watchlist if s.get('status') != 'skip']
+        symbol_bias = {s['symbol']: s.get('bias', 'LONG') for s in watchlist if s.get('status') != 'skip'}
+        
         if not symbols:
             logger.info("LiveEngine: All watchlist stocks are skipped. Nothing to score.")
             return
@@ -253,13 +255,15 @@ class LiveEngine:
                 'index_pcr_rising': True, # Simplified
             }
             
+            bias = symbol_bias.get(sym, 'LONG')
+            
             # 5. Run All Scorers
-            oi_result = self.oi_scorer.calculate(sym, data)
-            price_result = self.price_scorer.calculate(sym, data)
-            volume_result = self.volume_scorer.calculate(sym, data)
-            space_result = self.space_scorer.calculate(sym, data)
-            rs_result = self.rs_scorer.calculate(sym, data)
-            market_result = self.market_scorer.calculate(sym, data)
+            oi_result = self.oi_scorer.calculate(sym, data, bias=bias)
+            price_result = self.price_scorer.calculate(sym, data, bias=bias)
+            volume_result = self.volume_scorer.calculate(sym, data, bias=bias)
+            space_result = self.space_scorer.calculate(sym, data, bias=bias)
+            rs_result = self.rs_scorer.calculate(sym, data, bias=bias)
+            market_result = self.market_scorer.calculate(sym, data, bias=bias)
             
             total_score = sum(r.score for r in [oi_result, price_result, volume_result, space_result, rs_result, market_result])
             
@@ -287,17 +291,17 @@ class LiveEngine:
             logger.info(f"[{sym}] Live Score Updated: {total_score}/100. Auto-skip: {should_skip}")
             
             # 6. Check Time Windows & Trigger Alert
+            threshold = self._get_time_threshold(now.time())
+            trading_ok, _ = self.risk_manager.is_trading_allowed(now.date().isoformat())
+            
             if not should_skip:
-                threshold = self._get_time_threshold(now.time())
-                trading_ok, _ = self.risk_manager.is_trading_allowed(now.date().isoformat())
-                
                 if total_score >= threshold and trading_ok:
                     if sym not in self._alerts_sent:
                         alert = self.alert_generator.generate_alert(sym, {
                             'oi': oi_result, 'price': price_result,
                             'volume': volume_result, 'space': space_result,
                             'rs': rs_result, 'market': market_result
-                        }, data)
+                        }, data, alert_type=bias)
                         save_alert(alert)
                         self._alerts_sent.add(sym)
                         
@@ -305,4 +309,28 @@ class LiveEngine:
                         alert_text = self.alert_generator.format_alert_text(alert)
                         self.telegram.send_message(alert_text)
                         
-                        logger.info(f"*** ALERT TRIGGERED: {sym} Score={total_score} >= Threshold({threshold}) ***")
+                        logger.info(f"*** ALERT TRIGGERED: {sym} Score={total_score} >= Threshold({threshold}) Bias={bias} ***")
+            else:
+                # SHORT_REJECTION trap logic for LONG stocks
+                if bias == "LONG" and trading_ok and sym not in self._alerts_sent:
+                    # Check if skipped specifically due to Resistance Trap
+                    is_trap = any("Resistance Path Blocked" in str(s) or "Resistance too close" in str(s) for s in skip_reasons)
+                    is_high_volume = data.get('rvol', 0.0) >= 2.0
+                    price_rejecting = data.get('current_price', 0) < data.get('vwap', 0)
+                    
+                    if is_trap and is_high_volume and price_rejecting:
+                        logger.info(f"*** SHORT REJECTION TRAP TRIGGERED: {sym} ***")
+                        # Regenerate space score with SHORT bias to get Support targets
+                        short_space = self.space_scorer.calculate(sym, data, bias="SHORT")
+                        
+                        alert = self.alert_generator.generate_alert(sym, {
+                            'oi': oi_result, 'price': price_result,
+                            'volume': volume_result, 'space': short_space,
+                            'rs': rs_result, 'market': market_result
+                        }, data, alert_type="SHORT_REJECTION")
+                        
+                        save_alert(alert)
+                        self._alerts_sent.add(sym)
+                        
+                        alert_text = self.alert_generator.format_alert_text(alert)
+                        self.telegram.send_message(alert_text)

@@ -170,55 +170,64 @@ class SpaceScorer(BaseScorer):
     def _detect_rejection(
         self,
         recent_candles: list[dict],
-        resistance_price: float,
+        barrier_price: float,
+        bias: str = "LONG",
     ) -> bool:
-        """Detect rejection pattern near resistance.
-
-        A rejection is identified when:
-        1. Stock tested resistance (got within 0.3% of resistance)
-        2. Came back down
-        3. Formed lower high (current high < previous high in window)
+        """Detect rejection pattern near resistance (LONG) or support (SHORT).
 
         Args:
             recent_candles: List of recent 30-min candle dicts (chronological).
-            resistance_price: The resistance price to check against.
+            barrier_price: The resistance or support price to check against.
+            bias: "LONG" or "SHORT"
+
 
         Returns:
             True if rejection pattern detected.
         """
-        if not recent_candles or len(recent_candles) < 2 or resistance_price <= 0:
+        if not recent_candles or len(recent_candles) < 2 or barrier_price <= 0:
             return False
 
-        proximity_threshold = resistance_price * (SPACE_REJECTION_PROXIMITY_PCT / 100.0)
+        proximity_threshold = barrier_price * (SPACE_REJECTION_PROXIMITY_PCT / 100.0)
 
-        # Check if any candle tested resistance
-        tested_resistance = False
+        # Check if any candle tested the barrier
+        tested_barrier = False
         for candle in recent_candles:
-            candle_high = candle.get("high", 0.0)
-            if abs(candle_high - resistance_price) <= proximity_threshold:
-                tested_resistance = True
-                break
+            if bias == "LONG":
+                candle_high = candle.get("high", 0.0)
+                if abs(candle_high - barrier_price) <= proximity_threshold:
+                    tested_barrier = True
+                    break
+            else: # SHORT
+                candle_low = candle.get("low", 0.0)
+                if abs(candle_low - barrier_price) <= proximity_threshold:
+                    tested_barrier = True
+                    break
 
-        if not tested_resistance:
+        if not tested_barrier:
             return False
 
-        # Check for lower high formation: latest high < previous high
+        # Check for rejection formation
         latest_candle = recent_candles[-1]
         previous_candle = recent_candles[-2]
 
-        latest_high = latest_candle.get("high", 0.0)
-        previous_high = previous_candle.get("high", 0.0)
-
-        # Also check that current close came back down from resistance
-        latest_close = latest_candle.get("close", 0.0)
-        came_back_down = latest_close < resistance_price
-
-        if latest_high < previous_high and came_back_down:
-            return True
+        if bias == "LONG":
+            latest_high = latest_candle.get("high", 0.0)
+            previous_high = previous_candle.get("high", 0.0)
+            latest_close = latest_candle.get("close", 0.0)
+            came_back_down = latest_close < barrier_price
+            if latest_high < previous_high and came_back_down:
+                return True
+        else: # SHORT
+            latest_low = latest_candle.get("low", 0.0)
+            previous_low = previous_candle.get("low", 0.0)
+            latest_close = latest_candle.get("close", 0.0)
+            came_back_up = latest_close > barrier_price
+            if latest_low > previous_low and came_back_up:
+                return True
 
         return False
 
-    def calculate(self, symbol: str, data: dict) -> ScoreResult:
+    def calculate(self, symbol: str, data: dict, bias: str = "LONG") -> ScoreResult:
         """Calculate Space score for a symbol.
 
         Args:
@@ -264,10 +273,16 @@ class SpaceScorer(BaseScorer):
         )
 
         # -----------------------------------------------------------
-        # ATR-Based Resistance Distance (10 pts)
+        # ATR-Based Distance to Barrier (10 pts)
         # -----------------------------------------------------------
         atr_score: float = 0.0
-        distance = resistance_price - current_price
+        if bias == "LONG":
+            distance = resistance_price - current_price
+            barrier_name = "Resistance"
+        else:
+            distance = current_price - support_price
+            barrier_name = "Support"
+            
         distance_atr_ratio = distance / atr if atr > 0 else 0.0
 
         if distance_atr_ratio > SPACE_ATR_FULL_THRESHOLD:
@@ -278,7 +293,7 @@ class SpaceScorer(BaseScorer):
             atr_score = 0.0
             auto_skip = True
             skip_reasons.append(
-                f"Resistance too close: {distance_atr_ratio:.2f}x ATR "
+                f"{barrier_name} too close: {distance_atr_ratio:.2f}x ATR "
                 f"(need >= {SPACE_ATR_PARTIAL_THRESHOLD}x)"
             )
 
@@ -289,13 +304,22 @@ class SpaceScorer(BaseScorer):
         max_pain_score: float = 0.0
 
         if max_pain > 0:
-            if max_pain > current_price:
-                max_pain_score = SPACE_MAXPAIN_MAX_SCORE * max_pain_weight
-            else:
-                auto_skip = True
-                skip_reasons.append(
-                    f"Max Pain ₹{max_pain:.2f} below current price ₹{current_price:.2f}"
-                )
+            if bias == "LONG":
+                if max_pain > current_price:
+                    max_pain_score = SPACE_MAXPAIN_MAX_SCORE * max_pain_weight
+                else:
+                    auto_skip = True
+                    skip_reasons.append(
+                        f"Max Pain ₹{max_pain:.2f} below current price ₹{current_price:.2f}"
+                    )
+            elif bias == "SHORT":
+                if max_pain < current_price:
+                    max_pain_score = SPACE_MAXPAIN_MAX_SCORE * max_pain_weight
+                else:
+                    auto_skip = True
+                    skip_reasons.append(
+                        f"Max Pain ₹{max_pain:.2f} above current price ₹{current_price:.2f}"
+                    )
 
         # -----------------------------------------------------------
         # Confluence Bonus (4 pts)
@@ -303,8 +327,13 @@ class SpaceScorer(BaseScorer):
         confluence = False
         confluence_score: float = 0.0
 
-        if resistance_price > 0 and max_pain > 0:
+        if bias == "LONG" and resistance_price > 0 and max_pain > 0:
             pct_diff = abs(resistance_price - max_pain) / resistance_price * 100
+            if pct_diff <= SPACE_CONFLUENCE_TOLERANCE_PCT:
+                confluence = True
+                confluence_score = SPACE_CONFLUENCE_BONUS
+        elif bias == "SHORT" and support_price > 0 and max_pain > 0:
+            pct_diff = abs(support_price - max_pain) / support_price * 100
             if pct_diff <= SPACE_CONFLUENCE_TOLERANCE_PCT:
                 confluence = True
                 confluence_score = SPACE_CONFLUENCE_BONUS
@@ -312,7 +341,8 @@ class SpaceScorer(BaseScorer):
         # -----------------------------------------------------------
         # Rejection Penalty (-5 pts)
         # -----------------------------------------------------------
-        rejection = self._detect_rejection(recent_candles, resistance_price)
+        barrier_to_check = resistance_price if bias == "LONG" else support_price
+        rejection = self._detect_rejection(recent_candles, barrier_to_check, bias)
         rejection_score: float = SPACE_REJECTION_PENALTY if rejection else 0.0
 
         # -----------------------------------------------------------

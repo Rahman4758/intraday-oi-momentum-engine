@@ -7,7 +7,7 @@ class AlertGenerator:
         self.db = db
         self.risk_manager = RiskManager(db)
         
-    def generate_alert(self, symbol: str, scores: dict, data: dict) -> dict:
+    def generate_alert(self, symbol: str, scores: dict, data: dict, alert_type: str = "LONG") -> dict:
         """
         Generate full alert matching spec Section 7 format.
         """
@@ -25,8 +25,15 @@ class AlertGenerator:
         resistance = space_result.details.get('resistance_price', entry_price * 1.01)
         atr = space_result.details.get('atr', 0)
         
-        rr_ratio = self.risk_manager.calculate_rr_ratio(entry_price, support, resistance)
-        position_size = self.risk_manager.calculate_position_size(entry_price, support)
+        if alert_type.startswith("SHORT"):
+            sl = resistance
+            target = support
+        else:
+            sl = support
+            target = resistance
+            
+        rr_ratio = self.risk_manager.calculate_rr_ratio(entry_price, sl, target)
+        position_size = self.risk_manager.calculate_position_size(entry_price, sl)
         
         # Build signals list
         signals = []
@@ -53,6 +60,7 @@ class AlertGenerator:
             'signals': signals,
             'position_size': position_size,
             'max_loss': self.risk_manager.capital * 0.01, # Using 1% risk rule
+            'alert_type': alert_type,
             'triggered_at': datetime.now()
         }
         return alert
@@ -63,13 +71,25 @@ class AlertGenerator:
         breakdown = alert.get('score_breakdown', {})
         signals = "\n".join(alert.get('signals', []))
         
-        text = f"""🎯 ALERT: {alert['symbol']}
+        alert_type = alert.get('alert_type', 'LONG')
+        
+        if alert_type == "SHORT_REJECTION":
+            header = f"🔴 SHORT (REJECTION TRAP): {alert['symbol']}"
+        elif alert_type == "SHORT":
+            header = f"🔴 SHORT (BEARISH): {alert['symbol']}"
+        else:
+            header = f"🟢 LONG (BULLISH): {alert['symbol']}"
+            
+        sl_label = "Resistance/SL" if alert_type.startswith("SHORT") else "Support/SL"
+        tgt_label = "Support/TGT" if alert_type.startswith("SHORT") else "Resistance/TGT"
+        
+        text = f"""{header}
 Score: {alert['total_score']}/100
 Time: {alert['triggered_at'].strftime('%I:%M %p')}
 
 Entry Zone : ₹{alert['entry_price']:.2f}
-Support/SL : ₹{alert['support']:.2f}
-Resistance : ₹{alert['resistance']:.2f}
+{sl_label} : ₹{alert['resistance' if alert_type.startswith("SHORT") else 'support']:.2f}
+{tgt_label} : ₹{alert['support' if alert_type.startswith("SHORT") else 'resistance']:.2f}
 ATR        : ₹{alert['atr']:.2f}
 R:R Ratio  : {alert['rr_ratio']}x
 

@@ -97,9 +97,7 @@ class EODScanner:
                 ema_20 = last_row['ema_20']
                 ema_50 = last_row['ema_50']
                 
-                if not (close_price > ema_50):
-                    logger.debug(f"[{symbol}] Skipped: Trend filter failed (Close: {close_price:.1f}, 50EMA: {ema_50:.1f})")
-                    continue
+                bias = "LONG" if close_price > ema_50 else "SHORT"
                     
                 avg_volume_20d = candles['volume'].tail(20).mean()
                 current_volume = last_row['volume']
@@ -133,7 +131,8 @@ class EODScanner:
                     'ema_20': ema_20,
                     'ema_50': ema_50,
                     'avg_volume_20d': avg_volume_20d,
-                    'atr_14': atr_14
+                    'atr_14': atr_14,
+                    'bias': bias
                 })
                 
             except Exception as e:
@@ -180,9 +179,13 @@ class EODScanner:
                         atm_strike = c["strike_price"]
                         
                 stock_pcr = total_pe_oi / total_ce_oi if total_ce_oi > 0 else 1.0
+                bias = stock_info['bias']
                 
-                if stock_pcr < 0.8:
-                    logger.debug(f"[{symbol}] Skipped: PCR {stock_pcr:.2f} < 0.8")
+                if bias == "LONG" and stock_pcr < 0.8:
+                    logger.debug(f"[{symbol}] Skipped: LONG PCR {stock_pcr:.2f} < 0.8")
+                    continue
+                elif bias == "SHORT" and stock_pcr > 0.6:
+                    logger.debug(f"[{symbol}] Skipped: SHORT PCR {stock_pcr:.2f} > 0.6")
                     continue
                 
                 # Sort for Top 3 Put Strikes
@@ -235,7 +238,8 @@ class EODScanner:
                     'avg_volume_20d': w_info['avg_volume_20d'],
                     'atr_14': w_info['atr_14'],
                     'pcr': w_info['pcr']
-                }
+                },
+                'bias': w_info['bias']
             })
             
         logger.info(f"EOD Scanner complete. {len(final_list)} added to watchlist.")

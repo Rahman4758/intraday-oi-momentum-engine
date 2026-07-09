@@ -37,8 +37,8 @@ class BaseScorer(ABC):
     """
 
     @abstractmethod
-    def calculate(self, symbol: str, data: dict) -> ScoreResult:
-        """Calculate score for given symbol with provided data.
+    def calculate(self, symbol: str, data: dict, bias: str = "LONG") -> ScoreResult:
+        """Calculate the score based on the provided data.
 
         Args:
             symbol: The stock symbol being scored (e.g., 'RELIANCE').
