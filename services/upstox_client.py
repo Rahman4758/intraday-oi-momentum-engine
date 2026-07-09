@@ -390,7 +390,8 @@ class UpstoxService:
                     if prev_close != 0
                     else 0.0
                 )
-                all_quotes[inst_key] = {
+                
+                quote_dict = {
                     "ltp": ltp,
                     "open": float(ohlc.get("open") or 0.0),
                     "high": float(ohlc.get("high") or 0.0),
@@ -400,6 +401,17 @@ class UpstoxService:
                     "oi": int(quote_info.get("oi") or 0),
                     "change_pct": round(change_pct, 2),
                 }
+                
+                # The API returns keys like NSE_EQ:BAJAJFINSV instead of the ISIN token.
+                # Store the quote under multiple keys to ensure the caller can find it.
+                token = quote_info.get("instrument_token")
+                symbol = quote_info.get("symbol")
+                
+                all_quotes[inst_key] = quote_dict
+                if token:
+                    all_quotes[token] = quote_dict
+                if symbol:
+                    all_quotes[symbol] = quote_dict
 
         logger.info("Fetched quotes for %d instruments.", len(all_quotes))
         return all_quotes
