@@ -58,9 +58,7 @@ def calculate_vwap(candles_df: pd.DataFrame) -> float:
     if "timestamp" in df.columns:
         df["timestamp"] = pd.to_datetime(df["timestamp"], utc=True)
         now_ist = datetime.now(IST)
-        session_start = IST.localize(
-            now_ist.replace(hour=9, minute=15, second=0, microsecond=0)
-        )
+        session_start = now_ist.replace(hour=9, minute=15, second=0, microsecond=0)
         # Keep only candles from today's session
         df = df[df["timestamp"] >= session_start]
 
