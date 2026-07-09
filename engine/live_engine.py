@@ -285,6 +285,7 @@ class LiveEngine:
                 'total_score': total_score,
                 'auto_skip': should_skip,
                 'skip_reason': '; '.join(skip_reasons) if skip_reasons else None,
+                'bias': bias,
                 'timestamp': now
             }
             save_live_score(score_data)

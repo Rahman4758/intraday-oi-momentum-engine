@@ -117,7 +117,10 @@ async function fetchWatchlist() {
                 
                 el.innerHTML = `
                     <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span style="font-size: 1.125rem; font-weight: 700;">${item.symbol}</span>
+                        <div class="symbol-container">
+                            <span class="symbol" style="font-size: 1.3rem;">${item.symbol}</span>
+                            ${item.bias === 'SHORT' ? '<span class="bias-badge short">🔴 SHORT</span>' : '<span class="bias-badge long">🟢 LONG</span>'}
+                        </div>
                         <span class="status-active" style="font-size: 0.75rem;">ON WATCH</span>
                     </div>
                     <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem; font-family: var(--font-mono);">
@@ -157,7 +160,11 @@ function renderScoreCards(scores) {
     
     scores.forEach(score => {
         const card = document.createElement('div');
-        card.className = 'score-card glass-panel';
+        
+        let biasClass = 'bias-long';
+        if (score.bias === 'SHORT') biasClass = 'bias-short';
+        
+        card.className = `score-card glass-panel ${biasClass}`;
         
         let skipBadge = score.auto_skip ? `<div class="auto-skip-badge" title="${score.skip_reason || 'Auto-skipped'}">SKIPPED</div>` : '';
         
@@ -171,15 +178,18 @@ function renderScoreCards(scores) {
         
         card.innerHTML = `
             <div class="card-header">
-                <div class="symbol-container">
-                    <div class="symbol">${score.symbol}</div>
-                    ${indexBadge}
+                <div class="symbol-group">
+                    <div class="symbol-container">
+                        <div class="symbol">${score.symbol}</div>
+                        ${indexBadge}
+                    </div>
+                    ${score.bias === 'SHORT' ? '<span class="bias-badge short">🔴 SHORT</span>' : '<span class="bias-badge long">🟢 LONG</span>'}
                 </div>
                 ${skipBadge}
             </div>
             <div class="gauge-container">
                 <svg class="gauge" viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="45" fill="none" stroke="#374151" stroke-width="8"></circle>
+                    <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="8"></circle>
                     <circle cx="50" cy="50" r="45" fill="none" stroke="${gaugeColor}" stroke-width="8" 
                             stroke-dasharray="${circumference}" stroke-dashoffset="${offset}" 
                             stroke-linecap="round" transform="rotate(-90 50 50)"></circle>
@@ -209,13 +219,20 @@ function renderScoreCards(scores) {
 
 function createAlertCard(alert) {
     const el = document.createElement('div');
-    el.className = 'alert-card glass-panel';
+    
+    let alertTypeClass = 'long';
+    let typeLabel = '🟢 LONG';
+    if (alert.alert_type === 'SHORT') { alertTypeClass = 'short'; typeLabel = '🔴 SHORT'; }
+    if (alert.alert_type === 'SHORT_REJECTION') { alertTypeClass = 'trap'; typeLabel = '🔴 REJECTION TRAP'; }
+    
+    el.className = `alert-card ${alertTypeClass}`;
     
     const time = new Date(alert.triggered_at.$date || alert.triggered_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
     
     el.innerHTML = `
         <div>
             <div class="alert-symbol">${alert.symbol}</div>
+            <div class="bias-badge ${alertTypeClass}" style="margin-bottom: 0.5rem; display: inline-block;">${typeLabel}</div>
             <div class="alert-time">${time}</div>
         </div>
         <div class="alert-stats">
