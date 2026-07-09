@@ -30,7 +30,13 @@ class PreMarketAnalyzer:
             logger.warning("No active watchlist found for today. Run EOD scanner first.")
             return
             
-        symbols = [item['symbol'] for item in watchlist]
+        symbols = []
+        symbol_data = {}
+        for item in watchlist:
+            sym = item['symbol']
+            symbols.append(sym)
+            symbol_data[sym] = item
+            
         logger.info(f"Loaded {len(symbols)} stocks from watchlist.")
         
         # 2. Map instruments
@@ -75,18 +81,31 @@ class PreMarketAnalyzer:
             stock_change = stock_quote.get('change_pct', 0.0)
             ltp = stock_quote.get('ltp', 100.0)
             
+            # Extract existing data to preserve it
+            item_data = symbol_data.get(sym, {})
+            bias = item_data.get('bias', 'LONG')
+            metrics = item_data.get('metrics', {})
+            
             # Auto-Skip: Gap Filter
             auto_skip = False
             status = 'active'
             skip_reason = ""
             
-            if stock_change > 2.0:
-                auto_skip = True
-                skip_reason = "Gap Up > 2% (Exhaustion)"
-            elif stock_change < -1.0:
-                auto_skip = True
-                skip_reason = "Gap Down (Against momentum)"
-                
+            if bias == "LONG":
+                if stock_change > 2.0:
+                    auto_skip = True
+                    skip_reason = "Gap Up > 2% (Exhaustion)"
+                elif stock_change < -1.0:
+                    auto_skip = True
+                    skip_reason = "Gap Down (Against momentum)"
+            elif bias == "SHORT":
+                if stock_change < -2.0:
+                    auto_skip = True
+                    skip_reason = "Gap Down < -2% (Exhaustion)"
+                elif stock_change > 1.0:
+                    auto_skip = True
+                    skip_reason = "Gap Up (Against momentum)"
+                    
             # Fetch Option Chain
             try:
                 expiries = self.upstox.get_expiry_dates(key)
@@ -120,7 +139,7 @@ class PreMarketAnalyzer:
                 "baseline_pcr": baseline_pcr,
                 "current_price": ltp
             }
-            oi_res = self.oi_scorer.calculate(sym, oi_data)
+            oi_res = self.oi_scorer.calculate(sym, oi_data, bias=bias)
             
             # If OI Scorer says auto skip (e.g. Put Buying detected)
             if oi_res.auto_skip:
@@ -139,7 +158,7 @@ class PreMarketAnalyzer:
                 "sector_index_change_pct": sector_change,
                 "nifty_change_pct": nifty_change
             }
-            rs_res = self.rs_scorer.calculate(sym, rs_data)
+            rs_res = self.rs_scorer.calculate(sym, rs_data, bias=bias)
             
             # Market Score
             market_data = {
@@ -147,7 +166,7 @@ class PreMarketAnalyzer:
                 "vix_value": vix_ltp,
                 "index_pcr_rising": True # Simplification for mock
             }
-            market_res = self.market_scorer.calculate("NIFTY", market_data)
+            market_res = self.market_scorer.calculate("NIFTY", market_data, bias=bias)
             
             if auto_skip:
                 status = 'skip'
@@ -162,7 +181,9 @@ class PreMarketAnalyzer:
                 'pre_market_rs_score': rs_res.score,
                 'pre_market_market_score': market_res.score,
                 'ltp': ltp,
-                'change_pct': stock_change
+                'change_pct': stock_change,
+                'bias': bias,
+                'metrics': metrics
             }
             save_watchlist(score_data)
             logger.info(f"[{sym}] Pre-Market updated. Status: {status}, OI: {oi_res.score}, RS: {rs_res.score}")

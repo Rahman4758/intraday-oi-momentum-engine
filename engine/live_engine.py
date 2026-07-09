@@ -17,8 +17,8 @@ from scorers.volume_scorer import VolumeScorer
 from scorers.space_scorer import SpaceScorer
 from scorers.rs_scorer import RSScorer
 from scorers.market_scorer import MarketScorer
-from indicators.vwap import calculate_vwap
-from indicators.adx import calculate_adx
+from indicators.vwap import calculate_vwap_raw
+from indicators.adx import calculate_adx_raw
 from indicators.rvol import calculate_rvol
 from services.telegram_client import TelegramClient
 from config.universe import SECTOR_INDEX_MAP, INDEX_KEYS
@@ -215,22 +215,23 @@ class LiveEngine:
                         min_pain = pain
                         max_pain = strike
 
-            # 3. Fetch 1-min Candles for VWAP and ADX
+            # 3. Fetch 1-min Candles for VWAP and ADX (RAW Memory Optimized)
             try:
-                candles_1m = self.upstox.get_intraday_candles(key, "1minute")
-                if candles_1m.empty:
+                candles_1m_raw = self.upstox.get_intraday_candles_raw(key, "1minute")
+                if not candles_1m_raw:
                     logger.warning(f"[{sym}] Intraday candles empty. Cannot calculate VWAP/ADX. Skipping.")
                     continue
             except Exception as e:
                 logger.error(f"[{sym}] Intraday candles fetch failed: {e}. Skipping stock.")
                 continue
                 
-            vwap_val = calculate_vwap(candles_1m)
-            adx_val = calculate_adx(candles_1m, 14)
+            vwap_val = calculate_vwap_raw(candles_1m_raw)
+            adx_val = calculate_adx_raw(candles_1m_raw, 14)
             rvol_val = calculate_rvol(current_volume, [avg_vol_20d], minutes_elapsed)
 
-            if pd.isna(vwap_val): vwap_val = current_price
-            if pd.isna(adx_val): adx_val = 0
+            import math
+            if math.isnan(vwap_val): vwap_val = current_price
+            if math.isnan(adx_val): adx_val = 0
 
             # 4. Construct unified Data Dictionary
             info = SECTOR_INDEX_MAP.get(sym, {})

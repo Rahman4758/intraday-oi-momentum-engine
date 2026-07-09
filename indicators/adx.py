@@ -172,3 +172,73 @@ def calculate_adx(candles_df: pd.DataFrame, period: int = 14) -> float:
     adx_value = float(valid_adx[-1])
     logger.debug("ADX(%d) calculated: %.2f", period, adx_value)
     return adx_value
+
+def calculate_adx_raw(candles_list: list, period: int = 14) -> float:
+    """
+    Memory optimized ADX calculation (Zero Pandas/Numpy).
+    
+    candles_list: list of [time, o, h, l, c, v, oi]
+    """
+    if len(candles_list) < period + 1:
+        return float("nan")
+        
+    n = len(candles_list)
+    plus_dm = [0.0] * n
+    minus_dm = [0.0] * n
+    tr = [0.0] * n
+    
+    for i in range(1, n):
+        curr_h = candles_list[i][2]
+        curr_l = candles_list[i][3]
+        curr_c = candles_list[i][4]
+        
+        prev_h = candles_list[i-1][2]
+        prev_l = candles_list[i-1][3]
+        prev_c = candles_list[i-1][4]
+        
+        up_move = curr_h - prev_h
+        down_move = prev_l - curr_l
+        
+        if up_move > down_move and up_move > 0:
+            plus_dm[i] = up_move
+        if down_move > up_move and down_move > 0:
+            minus_dm[i] = down_move
+            
+        tr[i] = max(curr_h - curr_l, abs(curr_h - prev_c), abs(curr_l - prev_c))
+        
+    def wilders_smooth(values):
+        res = [None] * n
+        seed = sum(values[1:period+1]) / period
+        res[period] = seed
+        for i in range(period+1, n):
+            res[i] = res[i-1] - (res[i-1] / period) + values[i]
+        return res
+        
+    smoothed_plus = wilders_smooth(plus_dm)
+    smoothed_minus = wilders_smooth(minus_dm)
+    smoothed_tr = wilders_smooth(tr)
+    
+    dx = [None] * n
+    for i in range(period, n):
+        if smoothed_tr[i] != 0:
+            p_di = 100.0 * smoothed_plus[i] / smoothed_tr[i]
+            m_di = 100.0 * smoothed_minus[i] / smoothed_tr[i]
+            if (p_di + m_di) != 0:
+                dx[i] = 100.0 * abs(p_di - m_di) / (p_di + m_di)
+                
+    valid_dx = [x for x in dx if x is not None]
+    if len(valid_dx) < period:
+        return float("nan")
+        
+    # Smooth DX
+    adx_len = len(valid_dx)
+    adx = [None] * adx_len
+    seed = sum(valid_dx[:period]) / period
+    adx[period-1] = seed
+    
+    for i in range(period, adx_len):
+        adx[i] = adx[i-1] - (adx[i-1] / period) + valid_dx[i]
+        
+    if adx[-1] is not None:
+        return float(adx[-1])
+    return float("nan")

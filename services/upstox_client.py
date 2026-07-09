@@ -262,6 +262,47 @@ class UpstoxService:
         logger.info("Received %d intraday candles for %s", len(df), instrument_key)
         return df
 
+    def get_intraday_candles_raw(
+        self,
+        instrument_key: str,
+        interval: str = "1minute",
+    ) -> List[List[Any]]:
+        """
+        Fetch today's intraday candles as a raw list to save memory (No Pandas).
+
+        Returns
+        -------
+        list[list]
+            Sorted ascending by time. Each inner list:
+            [timestamp, open, high, low, close, volume, oi]
+        """
+        path = f"/historical-candle/intraday/{instrument_key}/{interval}"
+        logger.debug("Fetching raw intraday candles: %s", path)
+
+        data = self._request("GET", path)
+        candles = data.get("data", {}).get("candles", [])
+        
+        # Upstox returns descending by timestamp usually, we need ascending.
+        # Format from upstox: ["2023-10-25T15:29:00+05:30", 19200.0, 19201.5, 19198.0, 19200.5, 50000, 0]
+        parsed_candles = []
+        for c in candles:
+            # c = [timestamp_str, open, high, low, close, vol, oi]
+            if len(c) >= 7:
+                parsed_candles.append([
+                    c[0],               # timestamp
+                    float(c[1]),        # open
+                    float(c[2]),        # high
+                    float(c[3]),        # low
+                    float(c[4]),        # close
+                    int(c[5]),          # volume
+                    int(c[6])           # oi
+                ])
+                
+        # Sort by timestamp ascending
+        parsed_candles.sort(key=lambda x: x[0])
+        logger.debug("Received %d raw intraday candles for %s", len(parsed_candles), instrument_key)
+        return parsed_candles
+
     # ────────────────────────────────────────────────────────────────────
     # Option chain
     # ────────────────────────────────────────────────────────────────────

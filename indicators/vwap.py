@@ -80,3 +80,29 @@ def calculate_vwap(candles_df: pd.DataFrame) -> float:
     vwap = cumulative_tp_vol / cumulative_vol
     logger.debug("VWAP calculated: %.2f  (from %d candles)", vwap, len(df))
     return float(vwap)
+
+def calculate_vwap_raw(candles_list: list) -> float:
+    """
+    Memory optimized VWAP calculation (Zero Pandas).
+    
+    candles_list: list of [timestamp_str, open, high, low, close, vol, oi]
+    Assuming candles are already sorted and filtered for today.
+    """
+    if not candles_list:
+        return float("nan")
+        
+    cumulative_tp_vol = 0.0
+    cumulative_vol = 0.0
+    
+    for c in candles_list:
+        # typical price = (high + low + close) / 3
+        # c = [time, o, h, l, c, v, oi]
+        h, l, close, vol = c[2], c[3], c[4], c[5]
+        tp = (h + l + close) / 3.0
+        cumulative_tp_vol += (tp * vol)
+        cumulative_vol += vol
+        
+    if cumulative_vol == 0:
+        return float("nan")
+        
+    return float(cumulative_tp_vol / cumulative_vol)
